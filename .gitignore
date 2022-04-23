@@ -1,3 +1,7 @@
+# gcd_docker project additions
+mysql_data/
+gcd_data/*.sql
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
