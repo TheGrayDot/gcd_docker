@@ -31,8 +31,8 @@ RUN pip install -r requirements.txt
 
 # Create and switch to gcd_user
 USER root
-RUN addgroup -g 1000 gcd_user; exit 0
-RUN adduser -D -u 1000 -G gcd_user gcd_user -s /bin/bash; exit 0
+RUN addgroup --gid 1000 gcd_user
+RUN adduser --uid 1000 --gid 1000 --shell /bin/sh gcd_user
 USER gcd_user
 
 # Hack to keep the container up and not complain

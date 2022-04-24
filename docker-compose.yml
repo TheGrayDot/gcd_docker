@@ -36,6 +36,8 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./python/app:/app
+    networks:
+      - backend
   mysql:
     image: mysql:8.0
     container_name: gcd_mysql
@@ -52,6 +54,12 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./gcd_data:/docker-entrypoint-initdb.d
+    networks:
+      - backend
 
 volumes:
   mysql_data:
+
+networks:
+  backend:
+    driver: bridge
