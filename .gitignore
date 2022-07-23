@@ -1,5 +1,5 @@
 # gcd_docker project additions
-mysql_data/
+volumes/
 gcd_data/*.sql
 
 # Byte-compiled / optimized / DLL files

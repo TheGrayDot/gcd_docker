@@ -16,7 +16,7 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
     - Docker
     - Docker Compose
 - Clone the repo
-    - `got clone https://github.com/thomaslaurenson/gcd_docker.git`
+    - `git clone https://github.com/thomaslaurenson/gcd_docker.git`
 - Start Docker environment
     - `cd gcd_docker`
     - `docker-compose up`
