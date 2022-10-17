@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-docker-compose down
+docker compose down
 docker system prune -a -f
 
 echo "[+] Do you wish to remove existing MySQL data?"
