@@ -21,8 +21,10 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
     - `cp ~/Downloads/current.zip ./gcd_data && unzip ./gcd_data/current.zip`
 - Start Docker environment
     - `docker compose up`
+    - OR
+    - `./run.sh`
 - Run some a Python scipt in the Docker container to lookup a barcode
-    - `docker exec gcd_python python barcode_lookup.py 75960608629004011`
+    - `docker exec gcd_python python multi_barcode_lookup.py`
 
 ## Project Requirements
 

@@ -1,0 +1,54 @@
+import os
+
+import mysql.connector
+
+import comic
+
+
+class Database:
+    def __init__(self):
+        self.gcd_db = None
+
+    def connect(self):
+        self.gcd_db = mysql.connector.connect(
+            host="gcd_mysql",
+            user=os.getenv("MYSQL_USER"),
+            password=os.getenv("MYSQL_PASSWORD"),
+            database=os.getenv("MYSQL_DATABASE"),
+        )
+
+    def search_barcode(self, barcode: str, limit: str = 100):
+        query = """SELECT *
+                   FROM gcd_issue
+                   WHERE barcode = %s LIMIT %s"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (barcode, limit))
+            issues = cursor.fetchall()
+            return issues
+
+    def fetch_issue_dict_using_id(self, issue_id: int):
+        query = """SELECT *
+                   FROM gcd_issue
+                   WHERE id = %s LIMIT 1"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (issue_id,))
+            issue = cursor.fetchall()
+            return issue[0]
+
+    def fetch_series_dict_using_id(self, series_id: str):
+        query = """SELECT *
+                   FROM gcd_series
+                   WHERE id = %s LIMIT 1"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (series_id,))
+            series = cursor.fetchall()
+            return series[0]
+
+    def fetch_publisher_dict_using_id(self, publisher_id: str):
+        query = """SELECT *
+                   FROM gcd_publisher
+                   WHERE id = %s LIMIT 1"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (publisher_id,))
+            publisher = cursor.fetchall()
+            return publisher[0]
