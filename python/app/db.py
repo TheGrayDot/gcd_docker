@@ -2,8 +2,6 @@ import os
 
 import mysql.connector
 
-import comic
-
 
 class Database:
     def __init__(self):

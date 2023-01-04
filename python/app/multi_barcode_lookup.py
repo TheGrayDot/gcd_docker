@@ -18,9 +18,11 @@ with open("example_barcodes.txt") as f:
 for barcode in barcodes:
     # Lookup a comic using GCD issue ID
     issue_dicts = gcd_db.search_barcode(barcode)
-    # TODO: Could do something here to just process one
-    for issue_dict in issue_dicts:
-        # Find the associated comic series
+    
+    if issue_dicts:
+        # For simplicity, select first hit
+        # There will be duplicates, and this needs better handling
+        issue_dict = issue_dicts[0]
         series_id = str(issue_dict["series_id"])
         series_dict = gcd_db.fetch_series_dict_using_id(series_id)
         # Find the associated comic publisher
@@ -30,4 +32,6 @@ for barcode in barcodes:
         comic_obj = comic.Comic()
         comic_obj.populate(issue_dict, series_dict, publisher_dict)
         comic_obj.print_for_spreadsheet()
-        comic_obj.print_gcd_style_title()
+        # comic_obj.print_gcd_style_title()
+    else:
+        print(f"{barcode}\tNONE")
