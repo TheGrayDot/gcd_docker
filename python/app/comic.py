@@ -21,37 +21,37 @@ class Comic:
         # Properties from publisher table
         self.publisher_name = None
 
-    def populate(self, issue_dict, series_dict, publisher_dict):
+    def populate(self, issue, series, publisher):
         """Populate object using issue/series data"""
-        self.populate_from_issue_data(issue_dict)
-        self.populate_from_series_data(series_dict)
-        self.populate_from_publisher_data(publisher_dict)
+        self.populate_from_issue_data(issue)
+        self.populate_from_series_data(series)
+        self.populate_from_publisher_data(publisher)
 
-    def populate_from_issue_data(self, issue_dict):
+    def populate_from_issue_data(self, issue):
         """Pop object using dict from GCD issue query"""
-        self.issue_id = issue_dict["id"]
-        self.series_id = issue_dict["series_id"]
-        self.issue_number = issue_dict["number"]
-        self.volume_number = issue_dict["volume"]
-        self.publication_date = issue_dict["publication_date"]
-        self.barcode = issue_dict["barcode"]
-        self.title = issue_dict["title"]
-        self.variant_name = issue_dict["variant_name"]
-        self.on_sale_date = issue_dict["on_sale_date"]
-        self.variant_of_id = issue_dict["variant_of_id"]
+        self.issue_id = issue["id"]
+        self.series_id = issue["series_id"]
+        self.issue_number = issue["number"]
+        self.volume_number = issue["volume"]
+        self.publication_date = issue["publication_date"]
+        self.barcode = issue["barcode"]
+        self.title = issue["title"]
+        self.variant_name = issue["variant_name"]
+        self.on_sale_date = issue["on_sale_date"]
+        self.variant_of_id = issue["variant_of_id"]
 
-    def populate_from_series_data(self, series_dict):
+    def populate_from_series_data(self, series):
         """Pop object using dict from GCD series query"""
-        self.series_name = series_dict["name"]
-        self.year_began = series_dict["year_began"]
-        self.publisher_id = series_dict["publisher_id"]
+        self.series_name = series["name"]
+        self.year_began = series["year_began"]
+        self.publisher_id = series["publisher_id"]
 
-    def populate_from_publisher_data(self, publisher_dict):
+    def populate_from_publisher_data(self, publisher):
         """Pop object using dict from GCD publisher query"""
-        self.publisher_name = publisher_dict["name"]
+        self.publisher_name = publisher["name"]
 
     def print_for_spreadsheet(self):
-        """Print line to be pasted into my spreadsheet"""
+        """Print line to be pasted into my personal spreadsheet"""
         print(
             f"{self.barcode}\t{self.issue_id}\t{self.series_name}\t{self.year_began}\t{self.issue_number}"
         )
