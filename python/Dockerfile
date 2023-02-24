@@ -14,6 +14,5 @@ RUN addgroup --gid 1000 gcd_user; exit 0
 RUN adduser --uid 1000 --gid 1000 --shell /bin/sh gcd_user; exit 0
 USER gcd_user
 
-# Hack to keep the container up and not complain
-# Yes, somewhat bad practice...
+# Keep the container running
 CMD tail -f /dev/null
