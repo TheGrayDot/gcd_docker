@@ -1,6 +1,7 @@
 # gcd_docker project additions
 volumes/
 gcd_data/*.sql
+gcd_data/*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
