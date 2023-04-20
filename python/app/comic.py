@@ -1,3 +1,7 @@
+import datetime
+
+import dateparser
+
 import db
 
 
@@ -20,6 +24,25 @@ class Comic:
         self.publisher_id = None
         # Properties from publisher table
         self.publisher_name = None
+
+    def to_json(self):
+        data = {
+            "issue_id": self.issue_id,
+            "series_id": self.series_id,
+            "issue_number": self.issue_number,
+            "volume_number": self.volume_number,
+            "publication_date": self.publication_date,
+            "barcode": self.barcode,
+            "title": self.title,
+            "variant_name": self.variant_name,
+            "on_sale_date": self.on_sale_date,
+            "variant_of_id": self.variant_of_id,
+            "series_name": self.series_name,
+            "year_began": self.year_began,
+            "publisher_id": self.publisher_id,
+            "publisher_name": self.publisher_name
+        }
+        return data
 
     def populate(self, issue, series, publisher):
         """Populate object using issue/series data"""

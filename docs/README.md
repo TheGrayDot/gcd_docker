@@ -171,6 +171,38 @@ mysql> DESCRIBE gcd_series;
 +---------------------------+--------------+------+-----+---------------------+----------------+
 ```
 
+## Publisher Tables
+
+Represents a comic book publisher. For example, Marvel.
+
+```
+mysql> describe gcd_publisher;
++------------------------------+--------------+------+-----+---------------------+----------------+
+| Field                        | Type         | Null | Key | Default             | Extra          |
++------------------------------+--------------+------+-----+---------------------+----------------+
+| id                           | int          | NO   | PRI | NULL                | auto_increment |
+| name                         | varchar(255) | NO   | MUL | NULL                |                |
+| country_id                   | int          | NO   | MUL | NULL                |                |
+| year_began                   | int          | YES  | MUL | NULL                |                |
+| year_ended                   | int          | YES  |     | NULL                |                |
+| notes                        | longtext     | NO   |     | NULL                |                |
+| url                          | varchar(255) | NO   |     | NULL                |                |
+| brand_count                  | int          | NO   | MUL | 0                   |                |
+| indicia_publisher_count      | int          | NO   | MUL | 0                   |                |
+| series_count                 | int          | NO   |     | 0                   |                |
+| created                      | datetime     | NO   |     | 1901-01-01 00:00:00 |                |
+| modified                     | datetime     | NO   | MUL | 1901-01-01 00:00:00 |                |
+| issue_count                  | int          | NO   |     | 0                   |                |
+| deleted                      | tinyint(1)   | NO   | MUL | 0                   |                |
+| year_began_uncertain         | tinyint(1)   | NO   | MUL | 0                   |                |
+| year_ended_uncertain         | tinyint(1)   | NO   | MUL | 0                   |                |
+| year_overall_began           | int          | YES  | MUL | NULL                |                |
+| year_overall_began_uncertain | tinyint(1)   | NO   | MUL | NULL                |                |
+| year_overall_ended           | int          | YES  |     | NULL                |                |
+| year_overall_ended_uncertain | tinyint(1)   | NO   | MUL | NULL                |                |
++------------------------------+--------------+------+-----+---------------------+----------------+
+```
+
 ## Example Queries
 
 Lookup a comic issue with a specific barcode (including supplementary 2-5 digit code):
