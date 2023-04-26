@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  python:
+    image: python:3.9-slim-bullseye
+    container_name: tgd_python
+    build:
+      context: python
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PORT=${MYSQL_PORT}
+    volumes:
+      - ./python/app:/app
+  mysql:
+    image: mysql:8.0
+    container_name: tgd_mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PORT=${MYSQL_PORT}
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+      - ../data/gcd_dump/:/docker-entrypoint-initdb.d
