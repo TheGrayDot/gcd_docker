@@ -1,5 +1,5 @@
 import db
-import comic
+from model import comic
 
 
 # Connect to the GCD database

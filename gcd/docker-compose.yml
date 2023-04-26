@@ -15,6 +15,7 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./python/app:/app
+      - ../model:/app/model
   mysql:
     image: mysql:8.0
     container_name: gcd_mysql

@@ -1,5 +1,5 @@
 import db
-import comic
+from model import comic
 
 
 # Connect to the GCD database
@@ -20,18 +20,19 @@ for barcode in barcodes:
     issues = gcd_db.search_barcode(barcode)
     
     if issues:
+        comic_dict = dict()
         # For simplicity, select first hit
         # There will be duplicates, and this needs better handling
-        issue = issues[0]
-        series_id = str(issue["series_id"])
-        series = gcd_db.fetch_series_using_id(series_id)
+        issue_dict = issues[0]
+        # Find the associated comic series
+        series_id = str(issue_dict["series_id"])
+        series_dict = gcd_db.fetch_series_using_id(series_id)
         # Find the associated comic publisher
-        publisher_id = str(series["publisher_id"])
-        publisher = gcd_db.fetch_publisher_using_id(publisher_id)
-        # Use issue/series/publisher info to make a comic object
-        comic_obj = comic.Comic()
-        comic_obj.populate(issue, series, publisher)
+        publisher_id = str(series_dict["publisher_id"])
+        publisher_dict = gcd_db.fetch_publisher_using_id(publisher_id)
+        # Create Comic object from GCD data
+        comic_dict = comic.create_comic_dict_from_gcd_data(issue_dict, series_dict, publisher_dict)
+        comic_obj = comic.Comic.parse_obj(comic_dict)
         comic_obj.print_for_spreadsheet()
-        # comic_obj.print_gcd_style_title()
     else:
         print(f"{barcode}\tNONE")
