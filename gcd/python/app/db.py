@@ -63,7 +63,7 @@ class Database:
             return series[0]
 
     def fetch_publisher_using_id(self, publisher_id: str):
-        query = """SELECT *F ROM gcd_publisher
+        query = """SELECT * FROM gcd_publisher
                    WHERE id = %s LIMIT 1"""
         with self.gcd_db.cursor(dictionary=True) as cursor:
             cursor.execute(query, (publisher_id,))
