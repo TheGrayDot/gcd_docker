@@ -1,0 +1,26 @@
+version: 2
+
+updates:
+
+  - package-ecosystem: python
+    directory: /cbdb
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0  # only security updates
+
+  - package-ecosystem: docker
+    directory: /gcd
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0  # only security updates
+
+  - package-ecosystem: docker
+    directory: /tgd
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0  # only security updates
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

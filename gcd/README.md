@@ -20,12 +20,12 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
 - Clone the repo
     - `git clone https://github.com/TheGrayDot/gcd_docker.git && cd ./gcd_docker`
 - Copy a GCD MySQL dump to the `data` folder in the project root directory
-    - `unzip ~/Downloads/current.zip && cp ~/Downloads/2022-01-25.sql ./data`
+    - `unzip ~/Downloads/current.zip && cp ~/Downloads/2022-01-25.sql ./data/gcd_dump/`
 - Start Docker environment
     - `make run`
     - OR
     - `docker compose up --build`
-- Run a Python scipt in the Docker container to lookup a barcode
+- Run a Python scipt in the Docker container:
     - `docker exec gcd_python python run_multi_barcode_lookup.py`
     - `docker exec gcd_python python run_multi_gcd_issue_lookup.py`
     - `docker exec gcd_python python run_fetch_all_issues_in_series.py`

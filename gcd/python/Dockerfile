@@ -1,18 +1,11 @@
 FROM python:3.9-slim-bullseye
 
-# Create and set base folder for app code
-RUN mkdir /app; exit 0
-WORKDIR /app
-
-# Copy and install required packages
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-
-# Create and switch to gcd_user
 USER root
+COPY gcd/python/bootstrap.sh /bootstrap.sh
+RUN chmod +x /bootstrap.sh
+
 RUN addgroup --gid 1000 gcd_user; exit 0
 RUN adduser --uid 1000 --gid 1000 --shell /bin/sh gcd_user; exit 0
 USER gcd_user
 
-# Keep the container running
-CMD tail -f /dev/null
+ENTRYPOINT ["/bin/bash", "-f", "/bootstrap.sh"]

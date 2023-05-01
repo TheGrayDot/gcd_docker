@@ -5,8 +5,8 @@ services:
     image: python:3.9-slim-bullseye
     container_name: gcd_python
     build:
-      context: python
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: gcd/python/Dockerfile
     restart: unless-stopped
     environment:
       - MYSQL_USER=${MYSQL_USER}
@@ -14,8 +14,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./python/app:/app
-      - ../model:/app/model
+      - ./cbdb:/cbdb
   mysql:
     image: mysql:8.0
     container_name: gcd_mysql
@@ -30,5 +29,5 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./volumes/mysql:/var/lib/mysql
-      - ../data/gcd_dump/:/docker-entrypoint-initdb.d
+      - ./data/volumes/mysql:/var/lib/mysql
+      - ./data/gcd_dump/:/docker-entrypoint-initdb.d
