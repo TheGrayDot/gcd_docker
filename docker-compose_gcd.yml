@@ -15,6 +15,9 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./cbdb:/cbdb
+    networks:
+      - frontend
+      - backend
   mysql:
     image: mysql:8.0
     container_name: gcd_mysql
@@ -30,4 +33,10 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./data/volumes/mysql:/var/lib/mysql
-      - ./data/gcd_dump/:/docker-entrypoint-initdb.d
+      - ./data/gcd/:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:

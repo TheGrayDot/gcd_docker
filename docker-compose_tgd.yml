@@ -30,4 +30,4 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./volumes/mysql:/var/lib/mysql
-      - ../data/gcd_dump/:/docker-entrypoint-initdb.d
+      - ../data/tgd/:/docker-entrypoint-initdb.d
