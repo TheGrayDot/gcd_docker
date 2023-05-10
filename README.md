@@ -1,6 +1,12 @@
 # gcd_docker
 
-A simple Docker Compose environment for the [Grand Comic Database (GCD)](https://www.comics.org/) with a Python environment and scripts for interacting with the database.
+A simple Dockerised environment for working with the [Grand Comic Database™ (GCD)](https://www.comics.org/), and Python scripts for processing data into a format I work with.
+
+## Licence
+
+This project uses data courtesy of the [Grand Comics Database™](https://www.comics.org/) under a [Creative Commons Attribution license](LICENSE). For more information, please refer to the [GCD wiki page on Data Distribution](https://docs.comics.org/wiki/Data_Distribution) and the [GCD board decision on licensing](https://docs.comics.org/wiki/GCD_Board_Votes_-_2009#Data_License_and_proper_credit_in_derived_works).
+
+NOTE: At present no data from the GCD, or data from the GCD that has been modified, is currently provided in this repository. However, it is planned that derived data from the GCD will be distributed in this repository in the future. Additionally, since the project uses the GCD database (without distribution any data), it is both logical and ethical to adopt the same license.
 
 ## gcd
 
