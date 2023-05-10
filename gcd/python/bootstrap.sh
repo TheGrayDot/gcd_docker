@@ -1,6 +1,6 @@
 #!/bin/bash
 
 
-pip3 install -r /cbdb/requirements.txt
+pip3 install -r /python/requirements.txt
 
 tail -f /dev/null

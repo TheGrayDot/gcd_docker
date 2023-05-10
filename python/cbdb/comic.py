@@ -24,7 +24,7 @@ class Series(BaseModel):
 
 class Issue(BaseModel):
     id: int
-    number: int
+    number: Optional[int] = None
     volume: str
     title: str
     series_id: int
@@ -40,7 +40,7 @@ class Issue(BaseModel):
 
 class Comic(BaseModel):
     id: int
-    number: int
+    number: Optional[int] = None
     volume: str
     title: str
     publication_date: Optional[datetime] = None
@@ -75,7 +75,7 @@ def populate(issue_dict, series_dict, publisher_dict):
         "number": issue_dict["number"],
         "volume": issue_dict["volume"],
         "title": issue_dict["title"],
-        "publication_date": None,
+        "publication_date": issue_dict["publication_date"],
         "price": issue_dict["price"],
         "isbn": issue_dict["isbn"],
         "variant_of_id": issue_dict["variant_of_id"],

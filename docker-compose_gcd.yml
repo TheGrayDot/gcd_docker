@@ -14,7 +14,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./cbdb:/cbdb
+      - ./python:/python
     networks:
       - frontend
       - backend
