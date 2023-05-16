@@ -1,5 +1,5 @@
 # gcd_docker project additions
-data/volumes/
+data/volumes/mysql*
 data/gcd/*.sql
 data/gcd/*.zip
 data/gcd/*.bak

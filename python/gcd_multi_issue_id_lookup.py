@@ -1,5 +1,6 @@
 from cbdb import gcd_db
-from cbdb import comic
+# from cbdb import comic
+from cbdb import gcd_models
 
 
 # Connect to the GCD database
@@ -25,7 +26,9 @@ for issue_id in issue_ids:
     publisher_id = str(series_dict["publisher_id"])
     publisher_dict = db.fetch_publisher_using_id(publisher_id)
 
-    # Create Comic object from GCD data
-    comic_dict = comic.populate(issue_dict, series_dict, publisher_dict)
-    comic_obj = comic.Comic.parse_obj(comic_dict)
-    comic_obj.print_gcd_style_title()
+    # Create GCD object from GCD data
+    gcd_issue = gcd_models.Issue(**issue_dict)
+    gcd_series = gcd_models.Series(**series_dict)
+    gcd_publisher = gcd_models.Publisher(**publisher_dict)
+
+    # TODO: Finish script to print

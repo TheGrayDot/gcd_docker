@@ -1,5 +1,4 @@
 from cbdb import gcd_db
-from cbdb import comic
 
 
 # Connect to the GCD database
