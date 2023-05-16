@@ -1,6 +1,6 @@
 from cbdb import gcd_db
 from cbdb import gcd_models
-
+from cbdb import tgd_models
 
 # Connect to the GCD database
 db = gcd_db.Database()
@@ -34,6 +34,14 @@ for barcode in barcodes:
         gcd_issue = gcd_models.Issue(**issue_dict)
         gcd_series = gcd_models.Series(**series_dict)
         gcd_publisher = gcd_models.Publisher(**publisher_dict)
-        # TODO: Finish script to print
+        # Make new dict for import
+        comic_dict = publisher_dict.copy()
+        comic_dict.update(series_dict)
+        comic_dict.update(issue_dict)
+        comic_dict["series_name"] = series_dict["name"]
+        comic_dict["publisher_name"] = publisher_dict["name"]
+        # comic_dict
+        tgd_comic = tgd_models.Comic(**comic_dict)
+        tgd_comic.print_for_spreadsheet()
     else:
         print(f"{barcode}\tNONE")

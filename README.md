@@ -89,6 +89,20 @@ The scripts provided are mainly for examples.
 - For each issue ID, lookup and return the single matching issue
 - Print output in nice format
 
+### gcd_models.py
+
+Note that these were manually generated using the following method:
+
+```
+# View table in MySQL and copy to file
+DESCRIBE gcd_issue;
+# Split the file and print needed columns
+cat issue.txt | awk -F"|" '{print $2":"$3"="$6}'
+# Columns are name, type, default
+# Use find/replace to make changes to Python types/syntax
+# Update Optional (nullable) manually
+```
+
 ## Performance
 
 The current implementation is not tweaked for performance. It has been designed to be flexible, rather than performant. Unless you are crunching lots of data, this shouldn't be a problem.
