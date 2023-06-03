@@ -1,8 +1,8 @@
 # gcd_docker project additions
 data/volumes/mysql*
-data/gcd/*.sql
-data/gcd/*.zip
-data/gcd/*.bak
+data/gcd/[0-9]*.sql
+data/gcd/[0-9]*.zip
+data/gcd/[0-9]*.bak
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
