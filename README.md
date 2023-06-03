@@ -107,17 +107,22 @@ cat issue.txt | awk -F"|" '{print $2":"$3"="$6}'
 
 The current implementation is not tweaked for performance. It has been designed to be flexible, rather than performant. Unless you are crunching lots of data, this shouldn't be a problem.
 
-The initial database load time is very slow. The GCD MySQL dump is ~2GB, and takes about 45 minutes to import on my laptop. This is a one-time import if you keep the Docker volume. However, if you want faster load times, consider extracting the `gcd_issues` and `gcd_series` tables, and only importing them. Depending on what you are doing, these two tables are usually sufficient - lookup issue and series metadata. These two tables are about 400MB, so the load time is much faster. To load in just these files, use the following commands to extract the tables, then **only put those sql files** into the `gcd_data` folder.
+The initial database load time is very slow. The GCD MySQL dump is ~2GB, and takes about 45 minutes to import on my laptop. This is a one-time import if you keep the Docker volume. However, if you want faster load times, consider extracting the `gcd_issues` and `gcd_series` tables, and only importing them. Depending on what you are doing, these two tables are usually sufficient - lookup issue and series metadata. These two tables are about 500MB, so the load time is much faster. To load in just these files, use the following commands to extract the tables, then **only put those sql files** into the `gcd_data` folder.
 
 
 ```
-echo -e 'SET FOREIGN_KEY_CHECKS=0;\n' > gcd_data/gcd_series.sql
-cat 2022-04-01.sql | sed -n -e '/DROP TABLE.*`gcd_series`/,/UNLOCK TABLES/p' >> gcd_data/gcd_series.sql
+echo -e 'SET FOREIGN_KEY_CHECKS=0;\n' > data/gcd/issues.sql
+cat ~/Downloads/2023-06-01.sql | sed -n -e '/DROP TABLE.*`gcd_issue`/,/UNLOCK TABLES/p' >> data/gcd/issues.sql
 ```
 
 ```
-echo -e 'SET FOREIGN_KEY_CHECKS=0;\n' > gcd_data/gcd_issue.sql
-cat 2022-04-01.sql | sed -n -e '/DROP TABLE.*`gcd_issue`/,/UNLOCK TABLES/p' >> gcd_data/gcd_issue.sql
+echo -e 'SET FOREIGN_KEY_CHECKS=0;\n' > data/gcd/series.sql
+cat ~/Downloads/2023-06-01.sql | sed -n -e '/DROP TABLE.*`gcd_series`/,/UNLOCK TABLES/p' >> data/gcd/series.sql
+```
+
+```
+echo -e 'SET FOREIGN_KEY_CHECKS=0;\n' > data/gcd/publishers.sql
+cat ~/Downloads/2023-06-01.sql | sed -n -e '/DROP TABLE.*`gcd_publisher`/,/UNLOCK TABLES/p' >> data/gcd/publishers.sql
 ```
 
 ## GCD DB Table Structure

@@ -3,19 +3,19 @@ version: 2
 updates:
 
   - package-ecosystem: pip
-    directory: /cbdb
+    directory: /python/cbdb
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
 
   - package-ecosystem: docker
-    directory: /gcd
+    directory: /gcd/python
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
 
   - package-ecosystem: docker
-    directory: /tgd
+    directory: /tgd/python
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
