@@ -69,3 +69,11 @@ class Database:
             cursor.execute(query, (publisher_id,))
             publisher = cursor.fetchall()
             return publisher[0]
+
+    def paginate_all_publishers(self, limit: int, offset: int):
+        query = """SELECT * FROM gcd_publisher
+                   ORDER BY id LIMIT %s OFFSET %s"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (limit, offset))
+            publishers = cursor.fetchall()
+            return publishers
