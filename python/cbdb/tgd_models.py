@@ -9,7 +9,7 @@ class Comic(BaseModel):
     number: str = None
     volume: str = ""
     series_id: int = None
-    publication_date: str = None  # TODO: This should be datetime
+    publication_date: datetime = None
     price: str = None
     page_count: Optional[float] = None
     deleted: int = 0
