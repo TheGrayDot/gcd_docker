@@ -73,11 +73,10 @@ To auto-load data in the Docker environment, you will need to put the downloaded
 
 The scripts provided are mainly for examples.
 
-### gcd_series_issues_lookup.py
+### gcd_dump_publisher_data.py
 
-- Read in `example_series_ids.txt` file
-- For each series, lookup all Cover A issues
-- Print output in nice format
+- Query database for publishers
+- Output JSON file mapping ID to name
 
 ### gcd_multi_barcode_lookup.py
 
@@ -89,6 +88,12 @@ The scripts provided are mainly for examples.
 
 - Read in `example_issues.txt` file
 - For each issue ID, lookup and return the single matching issue
+- Print output in nice format
+
+### gcd_series_issues_lookup.py
+
+- Read in `example_series_ids.txt` file
+- For each series, lookup all Cover A issues
 - Print output in nice format
 
 ### gcd_models.py
