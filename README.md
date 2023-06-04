@@ -41,6 +41,8 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
 docker exec gcd_python python gcd_multi_barcode_lookup.py
 docker exec gcd_python python gcd_multi_issue_id_lookup.py
 docker exec gcd_python python gcd_series_issues_lookup.py
+docker exec gcd_python python gcd_dump_publisher_data.py
+docker exec gcd_python python gcd_test_load_all_into_models.py
 ```
 
 ### GCD DB Dump

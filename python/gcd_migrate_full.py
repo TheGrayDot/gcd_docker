@@ -10,7 +10,7 @@ from cbdb import tgd_models
 
 
 # Datetime object of the last miration
-LAST_DUMP_DT = datetime.strptime("2023-05-01 03:41:31", "%Y-%m-%d %H:%M:%S")
+LAST_DUMP_DT = datetime.strptime("1800-05-01 03:41:31", "%Y-%m-%d %H:%M:%S")
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
@@ -36,18 +36,17 @@ DB = gcd_db.Database()
 DB.connect()
 
 # Determine issue count
-print("[*] Determining row count...")
+# print("[*] Determining row count...")
 ROW_COUNT = 0
 query = "SELECT * FROM gcd_issue"
-with db.gcd_db.cursor() as cursor:
+with DB.gcd_db.cursor() as cursor:
     cursor.execute(query)
     cursor.fetchall()
     ROW_COUNT = cursor.rowcount
-print(f"[*] ROW_COUNT: {ROW_COUNT}")
-# ROW_COUNT = 100000
+# print(f"[*] ROW_COUNT: {ROW_COUNT}")
+# ROW_COUNT = 1000000
 
 # Paginate through all issues
-print("[*] Starting")
 OFFSET = 0
 LIMIT = 1000
  
@@ -102,6 +101,11 @@ while OFFSET < ROW_COUNT:
 
         # Make a TGD comic object
         tgd_comic = tgd_models.Comic(**comic_dict)
-        tgd_comic.print_for_spreadsheet()
 
-print("[*] Done")
+        # Create SQL insert statement
+        keys = ", ".join(str(x) for x in comic_dict.keys())
+        values = ", ".join(str(x) for x in comic_dict.values())
+        qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
+        print(qry)
+
+# print("[*] Done")
