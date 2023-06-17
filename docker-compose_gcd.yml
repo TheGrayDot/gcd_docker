@@ -32,7 +32,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./data/volumes/mysql:/var/lib/mysql
+      - ./data/volumes/gcd_mysql:/var/lib/mysql
       - ./data/gcd/:/docker-entrypoint-initdb.d
     networks:
       - backend

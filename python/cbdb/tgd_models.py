@@ -32,12 +32,10 @@ class Comic(BaseModel):
     year_ended_uncertain: int = 0
     first_issue_id: Optional[int] = None
     last_issue_id: Optional[int] = None
-    publisher_id: int = None
     country_id: int = None
     language_id: int = None
     has_gallery: int = 0
     issue_count: int = None
-    deleted: int = 0
     has_isbn: int = 1
     has_barcode: int = 1
     has_issue_title: int = 0
