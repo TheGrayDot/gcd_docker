@@ -3,7 +3,7 @@ version: 2
 updates:
 
   - package-ecosystem: pip
-    directory: /python/cbdb
+    directory: /python
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates

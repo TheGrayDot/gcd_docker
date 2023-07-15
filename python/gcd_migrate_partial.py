@@ -5,12 +5,11 @@ import dateparser
 import mysql.connector
 
 from cbdb import gcd_db
-from cbdb import gcd_models
 from cbdb import tgd_models
 
 
 # Datetime object of the last miration
-LAST_DUMP_DT = datetime.strptime("2023-06-01 03:41:31", "%Y-%m-%d %H:%M:%S")
+LAST_DUMP_DT = datetime.strptime("2023-06-01 00:00:00", "%Y-%m-%d %H:%M:%S")
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
@@ -23,49 +22,39 @@ DP_SETTINGS = {
 with open("cbdb/publishers.json") as f:
     PUBLISHERS = json.load(f)
 
-
-def has_been_updated(created, modified):
-    if created > LAST_DUMP_DT:
-        return True
-    if modified > LAST_DUMP_DT:
-        return True
-    return False
-
 # Connect to the GCD database
 DB = gcd_db.Database()
 DB.connect()
 
 # Determine issue count
-# print("[*] Determining row count...")
 ROW_COUNT = 0
 query = "SELECT * FROM gcd_issue"
 with DB.gcd_db.cursor() as cursor:
     cursor.execute(query)
     cursor.fetchall()
     ROW_COUNT = cursor.rowcount
-# print(f"[*] ROW_COUNT: {ROW_COUNT}")
-# ROW_COUNT = 1000000
 
 # Paginate through all issues
 OFFSET = 0
 LIMIT = 1000
  
 while OFFSET < ROW_COUNT:
-    # print(f"[*] OFFSET: {OFFSET}")
-    # print(f"[*] ROW_COUNT: {ROW_COUNT}")
-
     issues = DB.paginate_all_issues(LIMIT, OFFSET)
-    # print(f"[*] len(issues): {len(issues)}")
-
     OFFSET += LIMIT
 
     for issue_dict in issues:
-        # Check last update, and skip if not updated
+        # Check if issue has been created or updated
         created = issue_dict["created"]
+        created_date = created.strftime('%Y-%m-%d %H:%M:%S')
         modified = issue_dict["modified"]
-        bool_has_been_updated = has_been_updated(created, modified)
-        # Skip if issue has not been updated
-        if not bool_has_been_updated:
+        modified_date = modified.strftime('%Y-%m-%d %H:%M:%S')
+        exit(1)
+
+        # If not created/modified since last dump
+        # Continue to next result
+        if created_date < LAST_DUMP_DT:
+            continue
+        if modified_date < LAST_DUMP_DT:
             continue
 
         # Fetch series dict from db
@@ -105,7 +94,14 @@ while OFFSET < ROW_COUNT:
         # Create SQL insert statement
         keys = ", ".join(str(x) for x in comic_dict.keys())
         values = ", ".join(str(x) for x in comic_dict.values())
-        qry = f"UPDATE tgd_issues SET ({keys}) VALUES ({values}) WHERE id = {comic_dict['id']}"
-        print(qry)
 
-# print("[*] Done")
+        # If issue created, make insert statement
+        if created_date < LAST_DUMP_DT:
+            qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
+            print(qry)
+        # If issue has been modified, delete then update
+        else:
+            qry = f"DELETE tgd_issues WHERE id = {issue_dict['id']}"
+            print(qry)
+            qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
+            print(qry)
