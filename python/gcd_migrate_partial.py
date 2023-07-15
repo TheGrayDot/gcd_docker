@@ -13,10 +13,7 @@ LAST_DUMP_DT = datetime.strptime("2023-06-01 00:00:00", "%Y-%m-%d %H:%M:%S")
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
-DP_SETTINGS = {
-    "PREFER_DAY_OF_MONTH": "first",
-    "REQUIRE_PARTS": ["year"]
-}
+DP_SETTINGS = {"PREFER_DAY_OF_MONTH": "first", "REQUIRE_PARTS": ["year"]}
 
 # Published dictionary
 with open("cbdb/publishers.json") as f:
@@ -37,7 +34,7 @@ with DB.gcd_db.cursor() as cursor:
 # Paginate through all issues
 OFFSET = 0
 LIMIT = 1000
- 
+
 while OFFSET < ROW_COUNT:
     issues = DB.paginate_all_issues(LIMIT, OFFSET)
     OFFSET += LIMIT
@@ -45,10 +42,9 @@ while OFFSET < ROW_COUNT:
     for issue_dict in issues:
         # Check if issue has been created or updated
         created = issue_dict["created"]
-        created_date = created.strftime('%Y-%m-%d %H:%M:%S')
+        created_date = created.strftime("%Y-%m-%d %H:%M:%S")
         modified = issue_dict["modified"]
-        modified_date = modified.strftime('%Y-%m-%d %H:%M:%S')
-        exit(1)
+        modified_date = modified.strftime("%Y-%m-%d %H:%M:%S")
 
         # If not created/modified since last dump
         # Continue to next result
@@ -65,7 +61,7 @@ while OFFSET < ROW_COUNT:
         publication_date = issue_dict["publication_date"]
         publication_dt = dateparser.parse(publication_date, settings=DP_SETTINGS)
         if publication_dt:
-            publication_dt = publication_dt.strftime('%Y-%m-%d %H:%M:%S')
+            publication_dt = publication_dt.strftime("%Y-%m-%d %H:%M:%S")
             if publication_dt:
                 # dateparser returns today's date if not found
                 # So set it to None instead

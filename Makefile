@@ -25,3 +25,9 @@ tgd_clean:
 
 tgd_remove_volume:
 	sudo rm -rf ./data/volumes/tgd_mysql
+
+python_lint:
+	python3 -m venv ./python/venv; \
+	source python/venv/bin/activate; \
+	pip3 install -r python/requirements.txt; \
+	black ./python

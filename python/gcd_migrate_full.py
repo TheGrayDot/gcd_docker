@@ -11,10 +11,7 @@ from cbdb import tgd_models
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
-DP_SETTINGS = {
-    "PREFER_DAY_OF_MONTH": "first",
-    "REQUIRE_PARTS": ["year"]
-}
+DP_SETTINGS = {"PREFER_DAY_OF_MONTH": "first", "REQUIRE_PARTS": ["year"]}
 
 # Published dictionary
 with open("cbdb/publishers.json") as f:
@@ -35,7 +32,7 @@ with DB.gcd_db.cursor() as cursor:
 # Paginate through all issues
 OFFSET = 0
 LIMIT = 1000
- 
+
 while OFFSET < ROW_COUNT:
     issues = DB.paginate_all_issues(LIMIT, OFFSET)
     OFFSET += LIMIT
@@ -49,7 +46,7 @@ while OFFSET < ROW_COUNT:
         publication_date = issue_dict["publication_date"]
         publication_dt = dateparser.parse(publication_date, settings=DP_SETTINGS)
         if publication_dt:
-            publication_dt = publication_dt.strftime('%Y-%m-%d %H:%M:%S')
+            publication_dt = publication_dt.strftime("%Y-%m-%d %H:%M:%S")
             if publication_dt:
                 # dateparser returns today's date if not found
                 # So set it to None instead

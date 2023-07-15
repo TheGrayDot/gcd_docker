@@ -25,7 +25,7 @@ limit = 100
 
 # Dict to save publisher ID > publisher name
 publishers_dict = dict()
- 
+
 while offset < row_count:
     print(f"[*] offset: {offset}")
     publishers = db.paginate_all_publishers(limit, offset)

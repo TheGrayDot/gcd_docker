@@ -38,6 +38,14 @@ class Database:
             issues = cursor.fetchall()
             return issues
 
+    def paginate_all_issues_with_series(self, limit: int, offset: int):
+        query = """SELECT * FROM gcd_issue
+                   ORDER BY id LIMIT %s OFFSET %s"""
+        with self.gcd_db.cursor(dictionary=True) as cursor:
+            cursor.execute(query, (limit, offset))
+            issues = cursor.fetchall()
+            return issues
+
     def fetch_issue_using_id(self, issue_id: int):
         query = """SELECT * FROM gcd_issue
                    WHERE id = %s LIMIT 1"""

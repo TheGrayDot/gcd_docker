@@ -19,7 +19,7 @@ with open("cbdb/example_barcodes.txt") as f:
 for barcode in barcodes:
     # Lookup a comic using GCD issue ID
     issues = DB.search_barcode(barcode)
-    
+
     if issues:
         comic_dict = dict()
         # For simplicity, select first hit
