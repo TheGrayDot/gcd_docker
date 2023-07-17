@@ -42,15 +42,13 @@ while OFFSET < ROW_COUNT:
     for issue_dict in issues:
         # Check if issue has been created or updated
         created = issue_dict["created"]
-        created_date = created.strftime("%Y-%m-%d %H:%M:%S")
         modified = issue_dict["modified"]
-        modified_date = modified.strftime("%Y-%m-%d %H:%M:%S")
 
         # If not created/modified since last dump
         # Continue to next result
-        if created_date < LAST_DUMP_DT:
+        if created < LAST_DUMP_DT:
             continue
-        if modified_date < LAST_DUMP_DT:
+        if modified < LAST_DUMP_DT:
             continue
 
         # Fetch series dict from db
@@ -92,7 +90,7 @@ while OFFSET < ROW_COUNT:
         values = ", ".join(str(x) for x in comic_dict.values())
 
         # If issue created, make insert statement
-        if created_date < LAST_DUMP_DT:
+        if created < LAST_DUMP_DT:
             qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
             print(qry)
         # If issue has been modified, delete then update

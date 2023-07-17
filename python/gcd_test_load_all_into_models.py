@@ -22,7 +22,7 @@ print(f"[*] row_count: {row_count}")
 print("[*] Starting")
 offset = 0
 limit = 1000
- 
+
 while offset < row_count:
     print(f"[*] offset: {offset}")
     issues = DB.paginate_all_issues(limit, offset)
