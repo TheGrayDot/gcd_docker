@@ -1,23 +1,7 @@
 version: '3'
 
 services:
-  python:
-    image: python:3.9-slim-bullseye
-    container_name: gcd_python
-    build:
-      context: .
-      dockerfile: gcd/python/Dockerfile
-    restart: unless-stopped
-    environment:
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=gcd
-      - MYSQL_PORT=${MYSQL_PORT}
-    volumes:
-      - ./python:/python
-    networks:
-      - frontend
-      - backend
+
   mysql:
     image: mysql:8.0
     container_name: gcd_mysql
@@ -32,9 +16,29 @@ services:
       - MYSQL_DATABASE=gcd
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./data/volumes/gcd_mysql:/var/lib/mysql
+      - ./data/volumes/gcd_mysql_${GCD_DUMP_DATE_CURR}:/var/lib/mysql
       - ./data/gcd/:/docker-entrypoint-initdb.d
     networks:
+      - backend
+
+  python:
+    image: python:3.9-slim-bullseye
+    container_name: gcd_python
+    build:
+      context: .
+      dockerfile: gcd/python/Dockerfile
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=gcd
+      - MYSQL_PORT=${MYSQL_PORT}
+    volumes:
+      - ./python:/python
+    networks:
+      - frontend
       - backend
 
 networks:
