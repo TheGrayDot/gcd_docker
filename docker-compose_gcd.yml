@@ -11,7 +11,7 @@ services:
     environment:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_DATABASE=gcd
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./python:/python
@@ -29,7 +29,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_DATABASE=gcd
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
       - ./data/volumes/gcd_mysql:/var/lib/mysql
