@@ -10,7 +10,7 @@ gcd_clean:
 	docker image rm python:3.9-slim-bullseye;
 
 gcd_remove_volume:
-	sudo rm -rf ./data/volumes/gcd_mysql
+	sudo rm -rf ./data/volumes/gcd_mysql*
 
 tgd_run:
 	docker compose --file docker-compose_tgd.yml up
@@ -24,7 +24,7 @@ tgd_clean:
 	docker image rm python:3.9-slim-bullseye;
 
 tgd_remove_volume:
-	sudo rm -rf ./data/volumes/tgd_mysql
+	sudo rm -rf ./data/volumes/tgd_mysql*
 
 python_lint:
 	python3 -m venv ./python/venv; \

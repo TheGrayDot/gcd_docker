@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+import pydantic
 import dateparser
 import mysql.connector
 
@@ -83,19 +84,17 @@ while OFFSET < ROW_COUNT:
         comic_dict["publisher_name"] = PUBLISHERS[publisher_id]
 
         # Make a TGD comic object
-        tgd_comic = tgd_models.Comic(**comic_dict)
-
-        # Create SQL insert statement
-        keys = ", ".join(str(x) for x in comic_dict.keys())
-        values = ", ".join(str(x) for x in comic_dict.values())
+        try:
+            tgd_comic = tgd_models.Comic(**comic_dict)
+        except pydantic.error_wrappers.ValidationError:
+            print(f"Error: OFFSET = {OFFSET}")
+            print(f"Error: issue_id = {issue_dict['id']}")
+            continue
 
         # If issue created, make insert statement
         if created < LAST_DUMP_DT:
-            qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
-            print(qry)
+            tgd_comic.print_sql_insert_stmt()
         # If issue has been modified, delete then update
         else:
-            qry = f"DELETE tgd_issues WHERE id = {issue_dict['id']}"
-            print(qry)
-            qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
-            print(qry)
+            print(f"DELETE comics WHERE id = {issue_dict['id']};")
+            tgd_comic.print_sql_insert_stmt()

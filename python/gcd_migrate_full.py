@@ -78,7 +78,4 @@ while OFFSET < ROW_COUNT:
             continue
 
         # Create SQL insert statement
-        keys = ", ".join(str(x) for x in comic_dict.keys())
-        values = ", ".join(str(x) for x in comic_dict.values())
-        qry = f"INSERT INTO tgd_issues ({keys}) VALUES ({values})"
-        print(qry)
+        tgd_comic.print_sql_insert_stmt()

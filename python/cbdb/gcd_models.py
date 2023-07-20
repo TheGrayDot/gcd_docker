@@ -45,7 +45,7 @@ class Series(BaseModel):
     publisher_id: int
     country_id: int
     language_id: int
-    tracking_notes: str 
+    tracking_notes: str
     notes: str
     has_gallery: int = 0
     issue_count: int

@@ -1,6 +1,9 @@
+import json
+from decimal import Decimal
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+
+from pydantic import BaseModel, root_validator
 
 
 class Comic(BaseModel):
@@ -46,6 +49,37 @@ class Comic(BaseModel):
     publishing_format: str
     # Publisher
     publisher_name: str  # non-default name
+
+    @root_validator(pre=True)
+    def filter_unrecognized_variables(cls, values):
+        # Called when class is constructed
+        # Only declared (annotated) variables are kept
+        allowed_keys = set(cls.__fields__.keys())
+        return {k: v for k, v in values.items() if k in allowed_keys}
+
+    def format_value(self, value):
+        if isinstance(value, (int, float, Decimal)):
+            return str(value)
+        elif isinstance(value, (str, datetime)):
+            return f"'{value}'"
+        elif value is None:
+            return "NULL"
+        else:
+            return f"'{json.dumps(value)}'"
+
+    def print_sql_insert_stmt(self):
+        # Get only the annotated class variables (only those defined in this class)
+        columns = ", ".join(self.__annotations__.keys())
+        # Get a list of value based on annotated variables, and clean for SQL statement
+        values = ", ".join(
+            [
+                self.format_value(getattr(self, name))
+                for name, _ in self.__annotations__.items()
+            ]
+        )
+        # Make a simple SQL statement, and print it
+        qry = f"INSERT INTO comics ({columns}) VALUES ({values});"
+        print(qry)
 
     def print_gcd_style_title(self):
         """Print line to match GCD style comic naming conventions"""
