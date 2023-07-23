@@ -6,7 +6,7 @@ A simple Dockerised environment for working with the [Grand Comic Database™ (G
 
 This project uses data courtesy of the [Grand Comics Database™](https://www.comics.org/) under a [Creative Commons Attribution license](LICENSE). For more information, please refer to the [GCD wiki page on Data Distribution](https://docs.comics.org/wiki/Data_Distribution) and the [GCD board decision on licensing](https://docs.comics.org/wiki/GCD_Board_Votes_-_2009#Data_License_and_proper_credit_in_derived_works).
 
-NOTE: At present no data from the GCD, or data from the GCD that has been modified, is currently provided in this repository. However, it is planned that derived data from the GCD will be distributed in this repository in the future. Additionally, since the project uses the GCD database (without distribution any data), it is both logical and ethical to adopt the same license.
+NOTE: At present no data from the GCD, or data from the GCD that has been modified, is currently provided in this repository. However, it is planned that derived data from the GCD will be distributed in this repository in the future. Additionally, since the project uses the GCD database (while not currently distributing any data), it is both logical and ethical to adopt the same license.
 
 ## gcd
 
@@ -110,11 +110,45 @@ cat issue.txt | awk -F"|" '{print $2":"$3"="$6}'
 # Update Optional (nullable) manually
 ```
 
+## Migration
+
+Migration is a set of database models and scripts to transform the GCD data into something that I find more useful. The general steps are:
+
+- Download new GCD database dump file
+- Move un-compressed database dump file to `./data/gcd` directory
+- Update `GCD_DUMP_DATE_LAST` and `GCD_DUMP_DATE_CURR` to new values
+- Build GCD Docker environment using `make gcd_build`
+- Run migration script as documented below
+
+To perform a full migration:
+
+```
+docker exec gcd_python python gcd_migrate_full.py > data/tgd/migration_2023-06-01.sql
+```
+
+To perform a partial migration:
+
+```
+docker exec gcd_python python gcd_migrate_full.py > data/tgd/migration_2023-07-01.sql
+```
+
+Check for any errors:
+
+```
+grep "^Error" data/tgd/migration_2023-06-01.sql
+```
+
+Remove error line from file:
+
+```
+awk '!/^Error/' data/tgd/migration_2023-06-01.sql
+```
+
 ## Performance
 
 The current implementation is not tweaked for performance. It has been designed to be flexible, rather than performant. Unless you are crunching lots of data, this shouldn't be a problem.
 
-The initial database load time is very slow. The GCD MySQL dump is ~2GB, and takes about 45 minutes to import on my laptop. This is a one-time import if you keep the Docker volume. However, if you want faster load times, consider extracting the `gcd_issues` and `gcd_series` tables, and only importing them. Depending on what you are doing, these two tables are usually sufficient - lookup issue and series metadata. These two tables are about 500MB, so the load time is much faster. To load in just these files, use the following commands to extract the tables, then **only put those sql files** into the `gcd_data` folder.
+The initial database load time is very slow. The GCD MySQL dump is ~2GB, and takes about 45 minutes to import on my laptop. This is a one-time import if you keep the Docker volume. However, if you want faster load times, consider extracting the `gcd_issues`, `gcd_series` and `gcd_publishers` tables, and only importing them. Depending on what you are doing, these three tables are usually sufficient - lookup issue, series and publisher metadata. These three tables are about 500MB, so the load time is much faster. To load in just these files, use the following commands to extract the tables, then **only put those sql files** into the `gcd_data` folder.
 
 
 ```

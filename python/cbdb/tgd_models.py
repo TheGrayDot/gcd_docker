@@ -12,7 +12,7 @@ class Comic(BaseModel):
     number: str
     volume: str = ""
     series_id: int
-    publication_date: datetime = "1901-01-01 00:00:00"  # non-default property
+    publication_date: Optional[datetime]  # non-default property
     price: str
     page_count: Optional[float] = None
     deleted: int

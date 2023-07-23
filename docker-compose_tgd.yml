@@ -35,6 +35,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=tgd
       - MYSQL_PORT=${MYSQL_PORT}
+      - GCD_DUMP_DATE_LAST=${GCD_DUMP_DATE_LAST}
+      - GCD_DUMP_DATE_CURR=${GCD_DUMP_DATE_CURR}
     volumes:
       - ./python:/python
     networks:

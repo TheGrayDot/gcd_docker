@@ -1,3 +1,4 @@
+import os
 import json
 from datetime import datetime
 
@@ -9,15 +10,19 @@ from cbdb import gcd_db
 from cbdb import tgd_models
 
 
+GCD_DUMP_DATE_LAST = os.environ.get("GCD_DUMP_DATE_LAST")
+GCD_DUMP_DATE_CURR = os.environ.get("GCD_DUMP_DATE_CURR")
+
 # Datetime object of the last miration
-LAST_DUMP_DT = datetime.strptime("2023-06-01 00:00:00", "%Y-%m-%d %H:%M:%S")
+LAST_DUMP_DT = datetime.strptime(GCD_DUMP_DATE_LAST, "%Y-%m-%d %H:%M:%S")
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
+EARLIEST_DT = datetime.strptime("1901-01-01 00:00:00", "%Y-%m-%d %H:%M:%S")
 DP_SETTINGS = {"PREFER_DAY_OF_MONTH": "first", "REQUIRE_PARTS": ["year"]}
 
 # Published dictionary
-with open("cbdb/publishers.json") as f:
+with open(f"cbdb/publishers_{GCD_DUMP_DATE_CURR}.json") as f:
     PUBLISHERS = json.load(f)
 
 # Connect to the GCD database
@@ -60,6 +65,9 @@ while OFFSET < ROW_COUNT:
         publication_date = issue_dict["publication_date"]
         publication_dt = dateparser.parse(publication_date, settings=DP_SETTINGS)
         if publication_dt:
+            if publication_dt < EARLIEST_DT:
+                publication_dt = None
+        if publication_dt:
             publication_dt = publication_dt.strftime("%Y-%m-%d %H:%M:%S")
             if publication_dt:
                 # dateparser returns today's date if not found
@@ -87,7 +95,6 @@ while OFFSET < ROW_COUNT:
         try:
             tgd_comic = tgd_models.Comic(**comic_dict)
         except pydantic.error_wrappers.ValidationError:
-            print(f"Error: OFFSET = {OFFSET}")
             print(f"Error: issue_id = {issue_dict['id']}")
             continue
 
