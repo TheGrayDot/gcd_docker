@@ -15,7 +15,11 @@ GCD_DUMP_DATE_CURR = os.environ.get("GCD_DUMP_DATE_CURR")
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
 EARLIEST_DT = datetime.strptime("1901-01-01 00:00:00", "%Y-%m-%d %H:%M:%S")
-DP_SETTINGS = {"PREFER_DAY_OF_MONTH": "first", "REQUIRE_PARTS": ["year"]}
+DP_SETTINGS = {
+    "PREFER_DAY_OF_MONTH": "first",
+    "REQUIRE_PARTS": ["year"],
+    "RETURN_AS_TIMEZONE_AWARE": False,
+}
 
 # Published dictionary
 with open(f"cbdb/publishers_{GCD_DUMP_DATE_CURR}.json") as f:

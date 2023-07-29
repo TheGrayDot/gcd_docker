@@ -14,12 +14,16 @@ GCD_DUMP_DATE_LAST = os.environ.get("GCD_DUMP_DATE_LAST")
 GCD_DUMP_DATE_CURR = os.environ.get("GCD_DUMP_DATE_CURR")
 
 # Datetime object of the last miration
-LAST_DUMP_DT = datetime.strptime(GCD_DUMP_DATE_LAST, "%Y-%m-%d %H:%M:%S")
+LAST_DUMP_DT = datetime.strptime(GCD_DUMP_DATE_LAST, "%Y-%m-%d")
 
 # Date parser settings
 TODAY_DT = datetime.now().strftime("%Y-%m-%d")
 EARLIEST_DT = datetime.strptime("1901-01-01 00:00:00", "%Y-%m-%d %H:%M:%S")
-DP_SETTINGS = {"PREFER_DAY_OF_MONTH": "first", "REQUIRE_PARTS": ["year"]}
+DP_SETTINGS = {
+    "PREFER_DAY_OF_MONTH": "first",
+    "REQUIRE_PARTS": ["year"],
+    "RETURN_AS_TIMEZONE_AWARE": False,
+}
 
 # Published dictionary
 with open(f"cbdb/publishers_{GCD_DUMP_DATE_CURR}.json") as f:

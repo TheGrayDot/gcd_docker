@@ -129,7 +129,7 @@ docker exec gcd_python python gcd_migrate_full.py > data/tgd/migration_2023-06-0
 To perform a partial migration:
 
 ```
-docker exec gcd_python python gcd_migrate_full.py > data/tgd/migration_2023-07-01.sql
+docker exec gcd_python python gcd_migrate_partial.py > data/tgd/migration_2023-07-01.sql
 ```
 
 Check for any errors:
