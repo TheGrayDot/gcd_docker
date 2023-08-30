@@ -35,7 +35,7 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
     - `make run`
     - OR
     - `docker compose up --file docker-compose_gcd.yml --build`
-- Run a Python scipt in the Docker container:
+- Run a Python script in the Docker container:
 
 ```
 docker exec gcd_python python gcd_multi_barcode_lookup.py

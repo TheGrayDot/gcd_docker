@@ -4,7 +4,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: gcd_mysql
+    container_name: gcd-mysql
     restart: unless-stopped
     ports:
       - "3306:3306"
@@ -22,8 +22,8 @@ services:
       - backend
 
   python:
-    image: python:3.9-slim-bullseye
-    container_name: gcd_python
+    image: gcd-python
+    container_name: gcd-python
     build:
       context: .
       dockerfile: gcd/python/Dockerfile
