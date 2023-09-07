@@ -38,11 +38,11 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
 - Run a Python script in the Docker container:
 
 ```
-docker exec gcd_python python gcd_multi_barcode_lookup.py
-docker exec gcd_python python gcd_multi_issue_id_lookup.py
-docker exec gcd_python python gcd_series_issues_lookup.py
-docker exec gcd_python python gcd_dump_publisher_data.py
-docker exec gcd_python python gcd_test_load_all_into_models.py
+docker exec gcd-python python gcd_multi_barcode_lookup.py
+docker exec gcd-python python gcd_multi_issue_id_lookup.py
+docker exec gcd-python python gcd_series_issues_lookup.py
+docker exec gcd-python python gcd_dump_publisher_data.py
+docker exec gcd-python python gcd_test_load_all_into_models.py
 ```
 
 ### GCD DB Dump
@@ -123,13 +123,13 @@ Migration is a set of database models and scripts to transform the GCD data into
 To perform a full migration:
 
 ```
-docker exec gcd_python python gcd_migrate_full.py > data/tgd/migration_2023-06-01.sql
+docker exec gcd-python python gcd_migrate_full.py > data/tgd/migration_2023-06-01.sql
 ```
 
 To perform a partial migration:
 
 ```
-docker exec gcd_python python gcd_migrate_partial.py > data/tgd/migration_2023-07-01.sql
+docker exec gcd-python python gcd_migrate_partial.py > data/tgd/migration_2023-07-01.sql
 ```
 
 Check for any errors:

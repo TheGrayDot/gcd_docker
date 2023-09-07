@@ -9,7 +9,7 @@ class Database:
 
     def connect(self):
         self.gcd_db = mysql.connector.connect(
-            host="gcd_mysql",
+            host="gcd-mysql",
             user=os.getenv("MYSQL_USER"),
             password=os.getenv("MYSQL_PASSWORD"),
             database=os.getenv("MYSQL_DATABASE"),
