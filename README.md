@@ -146,7 +146,7 @@ awk '!/^Error/' data/tgd/migration_2023-06-01.sql
 
 ## Performance
 
-The current implementation is not tweaked for performance. It has been designed to be flexible, rather than performant. Unless you are crunching lots of data, this shouldn't be a problem.
+The current implementation is not tweaked for performance. It has been designed to be flexible, rather than performant. Unless you are crunching lots of data, this shouldn't be a problem. Initial load of the entire GCD takes about 45GB storage, almost 1GB RAM for the dump import, and takes approximately 45 minutes (depending on your system).
 
 The initial database load time is very slow. The GCD MySQL dump is ~2GB, and takes about 45 minutes to import on my laptop. This is a one-time import if you keep the Docker volume. However, if you want faster load times, consider extracting the `gcd_issues`, `gcd_series` and `gcd_publishers` tables, and only importing them. Depending on what you are doing, these three tables are usually sufficient - lookup issue, series and publisher metadata. These three tables are about 500MB, so the load time is much faster. To load in just these files, use the following commands to extract the tables, then **only put those sql files** into the `gcd_data` folder.
 

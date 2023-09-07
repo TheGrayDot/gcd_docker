@@ -3,8 +3,11 @@ version: '3'
 services:
 
   mysql:
-    image: mysql:8.0
+    image: tgd-mysql
     container_name: tgd-mysql
+    build:
+      context: .
+      dockerfile: tgd/mysql/Dockerfile
     restart: unless-stopped
     ports:
       - "3306:3306"

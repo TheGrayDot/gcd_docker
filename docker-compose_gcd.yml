@@ -3,8 +3,11 @@ version: '3'
 services:
 
   mysql:
-    image: mysql:8.0
+    image: gcd-mysql
     container_name: gcd-mysql
+    build:
+      context: .
+      dockerfile: gcd/mysql/Dockerfile
     restart: unless-stopped
     ports:
       - "3306:3306"
