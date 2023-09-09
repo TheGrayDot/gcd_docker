@@ -7,20 +7,28 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
+    assignees:
+      - "thomaslaurenson"
 
   - package-ecosystem: docker
     directory: /gcd/python
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
+    assignees:
+      - "thomaslaurenson"
 
   - package-ecosystem: docker
     directory: /tgd/python
     schedule:
       interval: weekly
     open-pull-requests-limit: 0  # only security updates
+    assignees:
+      - "thomaslaurenson"
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    assignees:
+      - "thomaslaurenson"
