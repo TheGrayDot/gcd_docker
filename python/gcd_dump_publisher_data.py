@@ -1,8 +1,11 @@
+import os
 import json
 import datetime
 
 from cbdb import gcd_db
 
+
+GCD_DUMP_DATE_CURR = os.environ.get("GCD_DUMP_DATE_CURR")
 
 # Connect to the GCD database
 db = gcd_db.Database()
@@ -42,6 +45,9 @@ while offset < row_count:
 
 # Save dict to JSON file
 with open("cbdb/publishers.json", "w") as f:
+    json.dump(publishers_dict, f, indent=4)
+
+with open(f"cbdb/publishers_{GCD_DUMP_DATE_CURR}.json", "w") as f:
     json.dump(publishers_dict, f, indent=4)
 
 print("[*] Done")

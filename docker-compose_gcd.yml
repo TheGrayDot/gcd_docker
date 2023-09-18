@@ -3,8 +3,8 @@ version: '3'
 services:
 
   mysql:
-    image: gcd-mysql
-    container_name: gcd-mysql
+    image: gcd-mysql:${GCD_DUMP_DATE_CURR}
+    container_name: gcd-mysql:${GCD_DUMP_DATE_CURR}
     build:
       context: .
       dockerfile: gcd/mysql/Dockerfile
@@ -25,8 +25,8 @@ services:
       - backend
 
   python:
-    image: gcd-python
-    container_name: gcd-python
+    image: gcd-python:${GCD_DUMP_DATE_CURR}
+    container_name: gcd-python:${GCD_DUMP_DATE_CURR}
     build:
       context: .
       dockerfile: gcd/python/Dockerfile
@@ -40,6 +40,8 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
       - GCD_DUMP_DATE_LAST=${GCD_DUMP_DATE_LAST}
       - GCD_DUMP_DATE_CURR=${GCD_DUMP_DATE_CURR}
+      - GCD_FULL_MIGRATION=${GCD_FULL_MIGRATION}
+      - GCD_PARTIAL_MIGRATION=${GCD_PARTIAL_MIGRATION}
     volumes:
       - ./python:/python
     networks:

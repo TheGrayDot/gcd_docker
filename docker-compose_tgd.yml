@@ -3,8 +3,8 @@ version: '3'
 services:
 
   mysql:
-    image: tgd-mysql
-    container_name: tgd-mysql
+    image: gcd-mysql:${TGD_DUMP_DATE_CURR}
+    container_name: gcd-mysql:${TGD_DUMP_DATE_CURR}
     build:
       context: .
       dockerfile: tgd/mysql/Dockerfile
@@ -19,14 +19,14 @@ services:
       - MYSQL_DATABASE=tgd
       - MYSQL_PORT=${MYSQL_PORT}
     volumes:
-      - ./data/volumes/tgd_mysql_${GCD_DUMP_DATE_CURR}:/var/lib/mysql
+      - ./data/volumes/tgd_mysql_${TGD_DUMP_DATE_CURR}:/var/lib/mysql
       - ./data/tgd/:/docker-entrypoint-initdb.d
     networks:
       - backend
 
   python:
-    image: tgd-python
-    container_name: tgd-python
+    image: gcd-python:${TGD_DUMP_DATE_CURR}
+    container_name: gcd-python:${TGD_DUMP_DATE_CURR}
     build:
       context: .
       dockerfile: tgd/python/Dockerfile
@@ -40,6 +40,7 @@ services:
       - MYSQL_PORT=${MYSQL_PORT}
       - GCD_DUMP_DATE_LAST=${GCD_DUMP_DATE_LAST}
       - GCD_DUMP_DATE_CURR=${GCD_DUMP_DATE_CURR}
+      - TGD_DUMP_DATE_CURR=${TGD_DUMP_DATE_CURR}
     volumes:
       - ./python:/python
     networks:
