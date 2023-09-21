@@ -4,13 +4,18 @@ services:
 
   mysql:
     image: gcd-mysql:${GCD_DUMP_DATE_CURR}
-    container_name: gcd-mysql:${GCD_DUMP_DATE_CURR}
+    container_name: gcd-mysql
     build:
       context: .
       dockerfile: gcd/mysql/Dockerfile
     restart: unless-stopped
     ports:
       - "3306:3306"
+    healthcheck:
+      # Custom healthcheck using file created by ./gcd/mysql/init.sh
+      test: bash -c "[ -f /var/lib/mysql/healthy ]"
+      interval: 30s
+      retries: 20
     environment:
       - MYSQL_HOST=localhost
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -18,20 +23,26 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=gcd
       - MYSQL_PORT=${MYSQL_PORT}
+      - GCD_DUMP_DATE_CURR=${GCD_DUMP_DATE_CURR}
     volumes:
+      # MySQL data volume for persistence
       - ./data/volumes/gcd_mysql_${GCD_DUMP_DATE_CURR}:/var/lib/mysql
-      - ./data/gcd/:/docker-entrypoint-initdb.d
+      # MySQL init script to create databases and insert data
+      - ./gcd/mysql/init.sh:/docker-entrypoint-initdb.d/init.sh
+      # Read only volume of database dump files
+      - ./data/gcd:/data/gcd:ro
     networks:
       - backend
 
   python:
     image: gcd-python:${GCD_DUMP_DATE_CURR}
-    container_name: gcd-python:${GCD_DUMP_DATE_CURR}
+    container_name: gcd-python
     build:
       context: .
       dockerfile: gcd/python/Dockerfile
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     restart: unless-stopped
     environment:
       - MYSQL_USER=${MYSQL_USER}

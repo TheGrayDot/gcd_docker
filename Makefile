@@ -1,3 +1,5 @@
+include .env
+
 gcd_run:
 	docker compose --file docker-compose_gcd.yml up
 
@@ -6,10 +8,10 @@ gcd_build:
 
 gcd_clean:
 	docker compose --file docker-compose_gcd.yml down; \
-	docker image rm mysql:8.0; \
-	docker image rm python:3.9-slim-bullseye;
+	docker image rm gcd-mysql:${GCD_DUMP_DATE_CURR}; \
+	docker image rm gcd-python:${GCD_DUMP_DATE_CURR};
 
-gcd_remove_volume:
+gcd_remove_volumes:
 	sudo rm -rf ./data/volumes/gcd_mysql*
 
 tgd_run:
@@ -20,8 +22,8 @@ tgd_build:
 
 tgd_clean:
 	docker compose --file docker-compose_tgd.yml down; \
-	docker image rm mysql:8.0; \
-	docker image rm python:3.9-slim-bullseye;
+	docker image rm tgd-mysql:${TGD_DUMP_DATE_CURR}; \
+	docker image rm tgd-python:${TGD_DUMP_DATE_CURR};
 
-tgd_remove_volume:
+tgd_remove_volumes:
 	sudo rm -rf ./data/volumes/tgd_mysql*
