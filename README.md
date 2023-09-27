@@ -2,7 +2,7 @@
 
 A simple Dockerised environment for working with the [Grand Comic Database™ (GCD)](https://www.comics.org/), and Python scripts for processing data into a format I work with.
 
-## Licence
+## License
 
 This project uses data courtesy of the [Grand Comics Database™](https://www.comics.org/) under a [Creative Commons Attribution license](LICENSE). For more information, please refer to the [GCD wiki page on Data Distribution](https://docs.comics.org/wiki/Data_Distribution) and the [GCD board decision on licensing](https://docs.comics.org/wiki/GCD_Board_Votes_-_2009#Data_License_and_proper_credit_in_derived_works).
 
@@ -29,21 +29,14 @@ A simple Docker Compose environment for the [Grand Comic Database (GCD)](https:/
     - Docker Compose plugin
 - Clone the repo
     - `git clone https://github.com/TheGrayDot/gcd_docker.git && cd ./gcd_docker`
-- Copy a GCD MySQL dump to the `data` folder in the project root directory
-    - `unzip ~/Downloads/current.zip && cp ~/Downloads/2022-01-25.sql ./data/gcd/`
+- Copy a GCD MySQL dump to the `data/gcd` folder
+    - `cd ~/Downloads && unzip ~/Downloads/current.zip && cp ~/Downloads/2022-01-25.sql ./data/gcd/`
 - Start Docker environment
     - `make run`
     - OR
     - `docker compose up --file docker-compose_gcd.yml --build`
 - Run a Python script in the Docker container:
-
-```
-docker exec gcd-python python gcd_multi_barcode_lookup.py
-docker exec gcd-python python gcd_multi_issue_id_lookup.py
-docker exec gcd-python python gcd_series_issues_lookup.py
-docker exec gcd-python python gcd_dump_publisher_data.py
-docker exec gcd-python python gcd_test_load_all_into_models.py
-```
+    - `docker exec gcd-python python gcd_test_load_all_into_models.py`
 
 ### GCD DB Dump
 
@@ -71,7 +64,15 @@ To auto-load data in the Docker environment, you will need to put the downloaded
 
 ## Python Scripts
 
-The scripts provided are mainly for examples.
+There are a collection of scripts in the `python` directory - mainly for examples. The `cbdb` folder contains a few classes for connecting to and retrieving data from the GCD database. Below is an example of how to run some of the scripts from the `gcd-python` container. Have a look at the source code to further understand the scripts and how to use/modify them.
+
+```
+docker exec gcd-python python gcd_multi_barcode_lookup.py
+docker exec gcd-python python gcd_multi_issue_id_lookup.py
+docker exec gcd-python python gcd_series_issues_lookup.py
+docker exec gcd-python python gcd_dump_publisher_data.py
+docker exec gcd-python python gcd_test_load_all_into_models.py
+```
 
 ### gcd_dump_publisher_data.py
 
