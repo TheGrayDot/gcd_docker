@@ -3,7 +3,12 @@
 
 echo "[*] init.sh"
 
-echo "[*] Loading GCD database dump..."
+echo "[*] Data volume files:"
+for file in /data/gcd/*; do
+  echo "    [*] $file"
+done
+
+echo "[*] Loading GCD file: $GCD_DUMP_DATE_CURR"
 mysql -u root -p$MYSQL_ROOT_PASSWORD gcd < "/data/gcd/$GCD_DUMP_DATE_CURR.sql"
 
 echo "[*] Running database indexing..."
