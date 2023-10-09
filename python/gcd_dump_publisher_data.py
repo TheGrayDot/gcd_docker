@@ -7,6 +7,8 @@ from cbdb import gcd_db
 
 GCD_DUMP_DATE_CURR = os.environ.get("GCD_DUMP_DATE_CURR")
 
+print("[*] Dumping publishers table info...")
+
 # Connect to the GCD database
 db = gcd_db.Database()
 db.connect()
@@ -24,7 +26,7 @@ print(f"[*] row_count: {row_count}")
 # Paginate through all publishers
 print("[*] Starting")
 offset = 0
-limit = 100
+limit = 1000
 
 # Dict to save publisher ID > publisher name
 publishers_dict = dict()
@@ -32,21 +34,18 @@ publishers_dict = dict()
 while offset < row_count:
     print(f"[*] offset: {offset}")
     publishers = db.paginate_all_publishers(limit, offset)
-    print(f"[*] len(publishers): {len(publishers)}")
+    # print(f"[*] len(publishers): {len(publishers)}")
 
     offset += limit
 
     # For each publisher in paginated list, fetch needed data
     for publisher_dict in publishers:
         publisher_id = int(publisher_dict["id"])
-        print(f"[*] {publisher_id}")
+        # print(f"[*] {publisher_id}")
         publisher_name = publisher_dict["name"]
         publishers_dict[publisher_id] = publisher_name
 
 # Save dict to JSON file
-with open("cbdb/publishers.json", "w") as f:
-    json.dump(publishers_dict, f, indent=4)
-
 with open(f"cbdb/publishers_{GCD_DUMP_DATE_CURR}.json", "w") as f:
     json.dump(publishers_dict, f, indent=4)
 
